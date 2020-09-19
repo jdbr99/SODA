@@ -9,10 +9,9 @@ import os
 import dotenv
 
 config = {
-    "bg_color": "#dcdcdc"
+    "bg_color": "#dcdcdc",
+    "base_dir": Path(dotenv.get_key(".env", "DIR"))
 }
-
-config["base_dir"] = Path(dotenv.get_key(".env", "DIR"))
 
 def parse_tags(entry):
     file_path = Path(f'{entry}/tags.txt')
