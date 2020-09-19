@@ -1,36 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+{% extends 'base.html' %}
+{% block title %}
+SODA - Standardized Open DAta
+{% endblock %}
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">SODA - <b>S</b>tarndardized <b>O</b>pen <b>DA</b>ta sharing platform.</h1>
+    <p class="lead">Welcomo to SODA!</p>
+    <hr class="my-4">
+    <p>Below you can find the last updated data sources or you can use the search bar to specify your query.</p>
 
-    <title>SODA - Standardized Open DAta</title>
-  </head>
-  <body>
-    <div class="jumbotron">
-      <h1 class="display-4">SODA - <b>S</b>tarndardized <b>O</b>pen <b>DA</b>ta sharing platform.</h1>
-      <p class="lead">Welcomo to SODA!</p>
-      <hr class="my-4">
-      <p>Below you can find the last updated data sources or you can use the search bar to specify your query.</p>
-
-      <form action="/search" method="get">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">🔍</span>
-          </div>
-          <input id="q" name="q" type="text" class="form-control" placeholder="Search data sources" aria-label="Search data sources" aria-describedby="basic-addon1" enctype="application/x-www-form-urlencoded">
+    <form action="/search" method="get">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">🔍</span>
         </div>
-      </form>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  </body>
-</html>
+        <input id="q" name="q" type="text" class="form-control" placeholder="Search data sources" aria-label="Search data sources" aria-describedby="basic-addon1" enctype="application/x-www-form-urlencoded">
+      </div>
+    </form>
+  </div>
+{% endblock %}
