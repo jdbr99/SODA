@@ -12,6 +12,8 @@ config = {
     "bg_color": "#dcdcdc"
 }
 
+config["base_dir"] = Path(dotenv.get_key(".env", "DIR"))
+
 def parse_tags(entry):
     file_path = Path(f'{entry}/tags.txt')
     with open(file_path) as f:
@@ -53,15 +55,15 @@ def tags_filter(tags):
 @app.route('/home')
 @app.route('/index')
 def home():
-    base_dir = dotenv.get_key(".env", "DIR")
-    base_dir = Path(f'{base_dir}/soda_files/data_sources')
-    _, dirnames, _ = next(os.walk(base_dir))
+    # base_dir = dotenv.get_key(".env", "DIR")
+    data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
+    dirnames = os.listdir(data_source_dir)
 
     recent = []
     counter = 0
 
     for entry in dirnames:
-        for path, dirs, files in os.walk(base_dir):
+        for path, _, _ in os.walk(data_source_dir):
             if path.endswith(entry):
                 tags = parse_tags(path)
                 description = get_description(path)
@@ -90,14 +92,15 @@ def data_source():
 
     name = args['q']
 
-    base_dir = dotenv.get_key(".env", "DIR")
-    base_dir = Path(f'{base_dir}/soda_files/data_sources')
-    _, dirnames, _ = next(os.walk(base_dir))
+    # base_dir = dotenv.get_key(".env", "DIR")
+    data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
+    dirnames = os.listdir(data_source_dir)
+    print(dirnames)
 
     if name not in dirnames:
         return "404"
 
-    for path, _, _ in os.walk(base_dir):
+    for path, _, _ in os.walk(data_source_dir):
         if path.endswith(name):
             tags = parse_tags(path)
             description = get_description(path)
@@ -120,10 +123,11 @@ def data_source():
 
 @app.route('/search')
 def search():
-    _dir_base = Path(os.getcwd())
+    # print(dotenv.get_key('.env', 'DIR'))
+    # _dir_base = Path(dotenv.get_key('.env', 'DIR'))
 
     # We obtain the direction for the data folders
-    data_source_dir = _dir_base/"soda_files"/"data_sources"
+    data_source_dir = config["base_dir"]/"soda_files"/"data_sources"
     os.chdir(data_source_dir)
     data_source_list = os.listdir()
 
@@ -149,5 +153,4 @@ def search():
 
     priority_folders.sort(key=lambda entry: entry["score"], reverse=True)
 
-    return "Buscado"
-
+    return render_template('search.html', entries=priority_folders, query=evaluation_tags, config=config)
