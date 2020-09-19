@@ -55,7 +55,6 @@ def tags_filter(tags):
 @app.route('/home')
 @app.route('/index')
 def home():
-    # base_dir = dotenv.get_key(".env", "DIR")
     data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
     dirnames = os.listdir(data_source_dir)
 
@@ -92,7 +91,6 @@ def data_source():
 
     name = args['q']
 
-    # base_dir = dotenv.get_key(".env", "DIR")
     data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
     dirnames = os.listdir(data_source_dir)
     print(dirnames)
@@ -105,7 +103,6 @@ def data_source():
             tags = parse_tags(path)
             description = get_description(path)
             files_list = get_file_sources(path)
-            # files_processed = [filename.split('.') for filename in files_list]
             timestamp = datetime.fromtimestamp(os.path.getmtime(path))
             last_modified = timestamp.strftime("%m/%d/%y - %H:%M")
             data = {
@@ -123,9 +120,6 @@ def data_source():
 
 @app.route('/search')
 def search():
-    # print(dotenv.get_key('.env', 'DIR'))
-    # _dir_base = Path(dotenv.get_key('.env', 'DIR'))
-
     # We obtain the direction for the data folders
     data_source_dir = config["base_dir"]/"soda_files"/"data_sources"
     os.chdir(data_source_dir)
