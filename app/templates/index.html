@@ -33,6 +33,9 @@ SODA 🥤 - Standardized Open DAta
           <p class="card-text">{{ entry.description }}</p>
           {% endif %}
           <p class="card-text"><small class="text-muted">Last updated {{ entry.last_updated }}</small></p>
+          {% for tag in entry.tags %}
+          <span class="badge badge-secondary">{{ tag }}</span>
+          {% endfor %}
         </div>
       </div>
       {% endfor %}
