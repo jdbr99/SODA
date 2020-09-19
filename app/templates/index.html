@@ -16,13 +16,13 @@
       <p class="lead">Welcomo to SODA!</p>
       <hr class="my-4">
       <p>Below you can find the last updated data sources or you can use the search bar to specify your query.</p>
-      
-      <form action="/search" method="GET">
+
+      <form action="/search" method="get">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">🔍</span>
           </div>
-          <input type="text" class="form-control" placeholder="Search data sources" aria-label="Search data sources" aria-describedby="basic-addon1">
+          <input id="q" name="q" type="text" class="form-control" placeholder="Search data sources" aria-label="Search data sources" aria-describedby="basic-addon1" enctype="application/x-www-form-urlencoded">
         </div>
       </form>
     </div>

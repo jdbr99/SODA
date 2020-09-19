@@ -1,7 +1,7 @@
 '''
 Declaration of views and routes.
 '''
-from flask import render_template
+from flask import render_template, request
 from app import app
 
 @app.route('/')
