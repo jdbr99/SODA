@@ -31,6 +31,7 @@ def home():
     _, dirnames, _ = next(os.walk(base_dir))
 
     recent = []
+    counter = 0
 
     for entry in dirnames:
         for path, dirs, files in os.walk(base_dir):
@@ -46,6 +47,9 @@ def home():
                     "timestamp": timestamp,
                     "last_updated": last_modified
                 })
+                counter += 1
+            if counter == 3:
+                break
 
     recent.sort(key=lambda entry : entry["timestamp"], reverse=True)
 
