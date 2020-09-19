@@ -1,15 +1,17 @@
 
 {% extends 'base.html' %}
 {% block title %}
-SODA - Standardized Open DAta
+SODA 🥤 - Standardized Open DAta
 {% endblock %}
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">SODA - <b>S</b>tarndardized <b>O</b>pen <b>DA</b>ta sharing platform.</h1>
-    <p class="lead">Welcomo to SODA!</p>
-    <hr class="my-4">
-    <p>Below you can find the last updated data sources or you can use the search bar to specify your query.</p>
+  <div class="jumbotron" style="margin:1%">
 
+    <h1 class="display-4">SODA 🥤 - <b>S</b>tandardized <b>O</b>pen <b>DA</b>ta sharing platform.</h1>
+    <p class="lead">Welcome to SODA!</p>
+    <hr class="my-4">
+    <p class="lead">Below you can find the last updated data sources or you can use the search bar to specify your query.</p>
+  
+    <h1>Search</h1>
     <form action="/search" method="get">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -18,5 +20,23 @@ SODA - Standardized Open DAta
         <input id="q" name="q" type="text" class="form-control" placeholder="Search data sources" aria-label="Search data sources" aria-describedby="basic-addon1" enctype="application/x-www-form-urlencoded">
       </div>
     </form>
+
+    <h1>Recently updated</h1>
+    <div class="card-group">
+      {% for entry in recent %}
+      <div class="card bg-light">
+        <div class="card-body">
+          <h5 class="card-title">{{ entry.name }}</h5>
+          {% if entry.description|length > 250 %}
+          <p class="card-text">{{ entry.description[:250] }}...</p>
+          {% else %}
+          <p class="card-text">{{ entry.description }}</p>
+          {% endif %}
+          <p class="card-text"><small class="text-muted">Last updated {{ entry.last_updated }}</small></p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  
   </div>
 {% endblock %}

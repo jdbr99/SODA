@@ -12,9 +12,26 @@
     {% block title %}{% endblock %}
     </title>
   </head>
-  <body>
+  <body style="background-color: {{ config.bg_color }};">
     {% block content %}{% endblock %}
-    </div>
+    
+    <footer>
+      <div class="container" style="text-align: center;">
+        <div class="row">
+          <div class="col">
+            Made with ❤️ by team Tachyon for HackMIT.
+          </div>
+          <div class="col">
+            All rights reserved.
+          </div>
+          <div class="col">
+            Contact us at:</br>
+            <a href="mailto://jd.bolanosrojas@ugto.mx">jd.bolanosrojas@ugto.mx</a>
+            <a href="mailto://dn.valtierrapinedo@ugto.mx">dn.valtierrapinedo@ugto.mx</a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
