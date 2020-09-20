@@ -24,20 +24,20 @@ SODA 🥤 - Standardized Open DAta
     <h1>Recently updated</h1>
     <div class="card-group">
       {% for entry in recent %}
-      <div class="card bg-light">
-        <div class="card-body">
-          <h5 class="card-title">{{ entry.name }}</h5>
-          {% if entry.description|length > 250 %}
-          <p class="card-text">{{ entry.description[:250] }}...</p>
-          {% else %}
-          <p class="card-text">{{ entry.description }}</p>
-          {% endif %}
-          <p class="card-text"><small class="text-muted">Last updated {{ entry.last_updated }}</small></p>
-          {% for tag in entry.tags %}
-          <span class="badge badge-secondary">{{ tag }}</span>
-          {% endfor %}
+        <div class="card bg-light">
+          <div class="card-body">
+            <a href="/data_source?q={{ entry.name }}" class="stretched-link" style="color: inherit;"><h5 class="card-title">{{ entry.name }}</h5></a>
+            {% if entry.description|length > 250 %}
+            <p class="card-text">{{ entry.description[:250] }}...</p>
+            {% else %}
+            <p class="card-text">{{ entry.description }}</p>
+            {% endif %}
+            <p class="card-text"><small class="text-muted">Last updated {{ entry.last_updated }}</small></p>
+            {% for tag in entry.tags %}
+            <span class="badge badge-secondary">{{ tag }}</span>
+            {% endfor %}
+          </div>
         </div>
-      </div>
       {% endfor %}
     </div>
   

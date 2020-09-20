@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-{{ data.name }}
+SODA 🥤 - Search
 {% endblock %}
 {% block content %}
-<div class=jumbotron style="margin: 1%;">
+<div class="jumbotron" style="margin: 1%;">
+
     <form action="/search" method="get">
         <div class="input-group input-group-lg">
             <div class="input-group-prepend">
@@ -19,25 +20,35 @@
             <input type="text" class="form-control" name="q" aria-label="Search for data source">
         </div>
     </form>
-      
-    <br/>
-    <h1 class="display-4">{{ data.name }}</h1>
+    
+    <br>
+    <h1 class="display-4">Searching for 
+        {% for tag in query %}
+          <span class="badge badge-secondary">{{ tag }}</span>
+        {% endfor %}
+    </h1>
+    <p class="lead">Below you can find the results of your query.</p>
     <hr class="my-4">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <h2>Description:</h2>
-                <p class="lead">{{ data.description }}</p>
-            </div>
-            <div class="col">
-                <h2>Available files:</h2>
-                <div class="list-group">
-                {% for file in data.files %}
-                    <a href="http://localhost:8000/{{ data.name }}/files/{{ file }}" class="list-group-item">{{ file }}</a>
-                {% endfor %}
+    <div class="list-group">
+        {% for entry in entries %}
+        <a href="/data_source?q={{ entry.name }}" class="list-group-item list-group-item-action">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <strong>{{ entry.name }}</strong>
+                    </div>
+                    <div class="col">
+                        {% for tag in entry.tags %}
+                        <span class="badge badge-secondary">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        <small>{{ entry.last_updated }}</small>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

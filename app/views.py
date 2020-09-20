@@ -1,7 +1,7 @@
 '''
 Declaration of views and routes.
 '''
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, send_from_directory
 from pathlib import Path
 from app import app
 from datetime import datetime
@@ -9,7 +9,8 @@ import os
 import dotenv
 
 config = {
-    "bg_color": "#dcdcdc"
+    "bg_color": "#dcdcdc",
+    "base_dir": Path(dotenv.get_key(".env", "DIR"))
 }
 
 def parse_tags(entry):
@@ -53,15 +54,14 @@ def tags_filter(tags):
 @app.route('/home')
 @app.route('/index')
 def home():
-    base_dir = dotenv.get_key(".env", "DIR")
-    base_dir = Path(f'{base_dir}/soda_files/data_sources')
-    _, dirnames, _ = next(os.walk(base_dir))
+    data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
+    dirnames = os.listdir(data_source_dir)
 
     recent = []
     counter = 0
 
     for entry in dirnames:
-        for path, dirs, files in os.walk(base_dir):
+        for path, _, _ in os.walk(data_source_dir):
             if path.endswith(entry):
                 tags = parse_tags(path)
                 description = get_description(path)
@@ -90,19 +90,17 @@ def data_source():
 
     name = args['q']
 
-    base_dir = dotenv.get_key(".env", "DIR")
-    base_dir = Path(f'{base_dir}/soda_files/data_sources')
-    _, dirnames, _ = next(os.walk(base_dir))
+    data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
+    dirnames = os.listdir(data_source_dir)
 
     if name not in dirnames:
         return "404"
 
-    for path, _, _ in os.walk(base_dir):
+    for path, _, _ in os.walk(data_source_dir):
         if path.endswith(name):
             tags = parse_tags(path)
             description = get_description(path)
             files_list = get_file_sources(path)
-            # files_processed = [filename.split('.') for filename in files_list]
             timestamp = datetime.fromtimestamp(os.path.getmtime(path))
             last_modified = timestamp.strftime("%m/%d/%y - %H:%M")
             data = {
@@ -114,16 +112,13 @@ def data_source():
                 "last_updated": last_modified,
             }
 
-    print(data['files'])
     return render_template('data_source.html', data=data, config=config)
 
 
 @app.route('/search')
 def search():
-    _dir_base = Path(os.getcwd())
-
     # We obtain the direction for the data folders
-    data_source_dir = _dir_base/"soda_files"/"data_sources"
+    data_source_dir = config["base_dir"]/"soda_files"/"data_sources"
     os.chdir(data_source_dir)
     data_source_list = os.listdir()
 
@@ -149,5 +144,4 @@ def search():
 
     priority_folders.sort(key=lambda entry: entry["score"], reverse=True)
 
-    return "Buscado"
-
+    return render_template('search.html', entries=priority_folders, query=evaluation_tags, config=config)
