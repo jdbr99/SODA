@@ -33,7 +33,7 @@
                 <h2>Available files:</h2>
                 <div class="list-group">
                 {% for file in data.files %}
-                    <a href="#" class="list-group-item">{{ file }}</a>
+                    <a href="http://localhost:8000/{{ data.name }}/files/{{ file }}" class="list-group-item">{{ file }}</a>
                 {% endfor %}
                 </div>
             </div>

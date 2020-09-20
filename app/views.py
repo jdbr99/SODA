@@ -1,7 +1,7 @@
 '''
 Declaration of views and routes.
 '''
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, send_from_directory
 from pathlib import Path
 from app import app
 from datetime import datetime
@@ -92,7 +92,6 @@ def data_source():
 
     data_source_dir = Path(f'{config["base_dir"]}/soda_files/data_sources')
     dirnames = os.listdir(data_source_dir)
-    print(dirnames)
 
     if name not in dirnames:
         return "404"
@@ -113,7 +112,6 @@ def data_source():
                 "last_updated": last_modified,
             }
 
-    print(data['files'])
     return render_template('data_source.html', data=data, config=config)
 
 
